@@ -1,9 +1,9 @@
 package main
 
 import (
-	"karate-backend/controllers"
-	"karate-backend/initializers"
-	"karate-backend/middleware"
+	"iKarate-GO/controllers"
+	"iKarate-GO/initializers"
+	"iKarate-GO/middleware"
 
 	"github.com/gin-gonic/gin"
 )
