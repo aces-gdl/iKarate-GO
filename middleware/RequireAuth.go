@@ -2,8 +2,8 @@ package middleware
 
 import (
 	"fmt"
-	"karate-backend/initializers"
-	"karate-backend/models"
+	"iKarate-GO/initializers"
+	"iKarate-GO/models"
 	"net/http"
 	"os"
 	"time"

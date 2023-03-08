@@ -1,8 +1,8 @@
 package controllers
 
 import (
-	"karate-backend/initializers"
-	"karate-backend/models"
+	"iKarate-GO/initializers"
+	"iKarate-GO/models"
 	"net/http"
 	"os"
 	"time"

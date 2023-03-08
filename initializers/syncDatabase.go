@@ -1,6 +1,6 @@
 package initializers
 
-import "karate-backend/models"
+import "iKarate-GO/models"
 
 func SyncDatabase() {
 	DB.AutoMigrate(&models.User{})
