@@ -20,6 +20,7 @@ func main() {
 	r.POST("/v1/security/signup", controllers.Signup)
 	r.POST("/v1/security/login", controllers.Login)
 	r.GET("/v1/security/validate", middleware.RequireAuth, controllers.Validate)
+	r.POST("/v1/catalogs/club", middleware.RequireAuth, controllers.PostClub)
 
 	r.Run()
 }
