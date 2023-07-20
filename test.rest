@@ -1,0 +1,146 @@
+@host = localhost:3500
+
+
+POST http://{{host}}/v1/security/signup
+content-type: application/json
+
+{
+    "Email":"participante2@gmail.com",
+    "Password":"password1",
+    "FamilyName": "Participante 2",
+    "GivenName":"Participante 2",
+    "ImageURL":"https://lh3.googleusercontent.com/a/AEdFTp6fK7kniHV6u_TKMiqMy1blxuVJetbTPfdA5ASuqA=s96-c",
+    "Name":"Participante2",
+    "CategoryID":"4234c285-5bab-49bf-a5d7-c34ff27ee256",
+    "PermissionID":"ffb9b6a3-5c49-4b0f-90a4-2338b93154b9"
+}
+
+###
+POST http://{{host}}/v1/security/login
+content-type: application/json
+
+{
+    "Email":"juan.navarro68@gmail.com",
+    "Password":"",
+    "GoogleID":"111751505227207835600"
+}
+
+### Users
+GET http://{{host}}/v1/catalogs/user
+?page=3&limit=50
+content-type: application/json
+###
+GET http://{{host}}/v1/catalogs/club
+
+###
+
+POST http://{{host}}/v1/catalogs/club&page=2
+content-type: application/json
+
+{
+	"Name":"Doopla Padel Club",
+	"Description": "Doppla Padel Club",
+	"Contact":"Mario",
+	"Address": "Puerto Vallarta",
+	"Phone": "33 3234-3456"
+}
+
+POST http://{{host}}/v1/catalogs/club
+content-type: application/json
+
+{
+	"Name":"GDL Padel Club",
+	"Description": "GDL Padel Club",
+	"Contact":"Mario",
+	"Address": "Calle 2",
+	"Phone": "33 3234-3456"
+}
+POST http://{{host}}/v1/catalogs/club
+content-type: application/json
+
+{
+	"Name":"GDL Padel Club",
+	"Description": "GDL Padel Club",
+	"Contact":"Mario",
+	"Address": "Calle 2",
+	"Phone": "33 3234-3456"
+}
+
+###
+GET http://{{host}}/v1/catalogs/court
+Content-Type: application/json
+
+
+###
+POST http://{{host}}/v1/catalogs/court
+Content-Type: application/json
+
+{
+    "Name":"Cancha 1",
+    "Indoors":false,
+    "ClubID":"11933517-f647-406d-818f-8f765fbe86fc"
+}
+
+POST http://{{host}}/v1/catalogs/court
+Content-Type: application/json
+
+{
+    "Name":"Cancha 2",
+    "Indoors":false,
+    "ClubID":"11933517-f647-406d-818f-8f765fbe86fc"
+}
+
+POST http://{{host}}/v1/catalogs/court
+Content-Type: application/json
+
+{
+    "Name":"Cancha 3",
+    "Indoors":false,
+    "ClubID":"11933517-f647-406d-818f-8f765fbe86fc"
+}
+POST http://{{host}}/v1/catalogs/court
+Content-Type: application/json
+
+{
+    "Name":"Cancha 4",
+    "Indoors":false,
+    "ClubID":"11933517-f647-406d-818f-8f765fbe86fc"
+}
+
+POST http://{{host}}/v1/catalogs/court
+Content-Type: application/json
+
+{
+    "Name":"Cancha 5",
+    "Indoors":false,
+    "ClubID":"11933517-f647-406d-818f-8f765fbe86fc"
+}
+
+POST http://{{host}}/v1/catalogs/court
+Content-Type: application/json
+
+{
+    "Name":"Cancha 6",
+    "Indoors":false,
+    "ClubID":"11933517-f647-406d-818f-8f765fbe86fc"
+}
+
+POST http://{{host}}/v1/catalogs/court
+Content-Type: application/json
+
+{
+    "Name":"Cancha 7",
+    "Indoors":false,
+    "ClubID":"11933517-f647-406d-818f-8f765fbe86fc"
+}
+
+POST http://{{host}}/v1/catalogs/court
+Content-Type: application/json
+
+{
+    "Name":"Cancha 8",
+    "Indoors":false,
+    "ClubID":"11933517-f647-406d-818f-8f765fbe86fc"
+}
+
+###

@@ -1,0 +1,92 @@
+@host = localhost:3500
+
+### Login
+
+POST http://{{host}}/v1/security/login
+content-type: application/json
+
+{
+    "Email":"juan.navarro68@gmail.com",
+    "Password":"",
+    "GoogleID":"111751505227207835600"
+}
+
+### create Courts
+POST http://{{host}}/v1/catalogs/court
+Content-Type: application/json
+
+{
+    "Name":"Cancha 1",
+    "Indoors":false,
+    "ClubID":"11933517-f647-406d-818f-8f765fbe86fc"
+}
+
+###
+POST http://{{host}}/v1/catalogs/court
+Content-Type: application/json
+
+{
+    "Name":"Cancha 2",
+    "Indoors":false,
+    "ClubID":"11933517-f647-406d-818f-8f765fbe86fc"
+}
+### 
+
+POST http://{{host}}/v1/catalogs/court
+Content-Type: application/json
+
+{
+    "Name":"Cancha 3",
+    "Indoors":false,
+    "ClubID":"11933517-f647-406d-818f-8f765fbe86fc"
+}
+
+###
+POST http://{{host}}/v1/catalogs/court
+Content-Type: application/json
+
+{
+    "Name":"Cancha 4",
+    "Indoors":false,
+    "ClubID":"11933517-f647-406d-818f-8f765fbe86fc"
+}
+
+###
+POST http://{{host}}/v1/catalogs/court
+Content-Type: application/json
+
+{
+    "Name":"Cancha 5",
+    "Indoors":false,
+    "ClubID":"11933517-f647-406d-818f-8f765fbe86fc"
+}
+
+####
+POST http://{{host}}/v1/catalogs/court
+Content-Type: application/json
+
+{
+    "Name":"Cancha 6",
+    "Indoors":false,
+    "ClubID":"11933517-f647-406d-818f-8f765fbe86fc"
+}
+
+###
+POST http://{{host}}/v1/catalogs/court
+Content-Type: application/json
+
+{
+    "Name":"Cancha 7",
+    "Indoors":false,
+    "ClubID":"11933517-f647-406d-818f-8f765fbe86fc"
+}
+
+###
+POST http://{{host}}/v1/catalogs/court
+Content-Type: application/json
+
+{
+    "Name":"Cancha 8",
+    "Indoors":false,
+    "ClubID":"11933517-f647-406d-818f-8f765fbe86fc"
+}

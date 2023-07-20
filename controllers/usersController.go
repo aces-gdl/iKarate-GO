@@ -4,147 +4,26 @@ import (
 	"iKarate-GO/initializers"
 	"iKarate-GO/models"
 	"net/http"
-	"os"
-	"time"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
-	"github.com/golang-jwt/jwt/v4"
-	"golang.org/x/crypto/bcrypt"
+	"gorm.io/gorm/clause"
 )
 
-func Signup(c *gin.Context) {
-	var body models.User
+func GetUsers(c *gin.Context) {
+	var page = c.DefaultQuery("page", "1")
+	var limit = c.DefaultQuery("limit", "10")
 
-	if c.Bind(&body) != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"error": "Fallo al leer body...",
-		})
+	intPage, _ := strconv.Atoi(page)
+	intLimit, _ := strconv.Atoi(limit)
+	offset := (intPage - 1) * intLimit
+
+	var users []models.User
+	results := initializers.DB.Preload(clause.Associations).Limit(intLimit).Offset(offset).Find(&users)
+	if results.Error != nil {
+		c.JSON(http.StatusBadGateway, gin.H{"status": "error", "message": results.Error})
 		return
 	}
 
-	if body.Email == "" {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"error": "Correo y/o contraseña son requeridos...",
-		})
-		return
-	}
-
-	user := models.User{
-		Email:      body.Email,
-		GivenName:  body.GivenName,
-		FamilyName: body.FamilyName,
-		GoogleID:   body.GoogleID,
-		ImageURL:   body.ImageURL,
-		Name:       body.Name,
-	}
-
-	if body.Password != "" {
-		hash, err := bcrypt.GenerateFromPassword([]byte(body.Password), 10)
-		if err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{
-				"error": "Fallo al convertir password a hash...",
-			})
-			return
-		}
-		user.Password = string(hash)
-	} else {
-		if body.GoogleID == "" {
-			c.JSON(http.StatusBadRequest, gin.H{
-				"error": "Correo y/o contraseña son requeridos...",
-			})
-			return
-		}
-	}
-
-	result := initializers.DB.Create(&user)
-	if result.Error != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"error": "Fallo al crear usuario... ",
-		})
-		return
-	}
-	c.JSON(http.StatusOK, gin.H{})
-}
-
-func Login(c *gin.Context) {
-	var body models.User
-
-	if c.Bind(&body) != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"error": "Fallo al leer body...",
-		})
-		return
-	}
-
-	if body.Email == "" {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"error": "Correo o clave invalido ...",
-		})
-		return
-	}
-
-	var user models.User
-	initializers.DB.First(&user, "email= ?", body.Email)
-	if user.ID.String() == "" {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"error": "Correo o clave invalido ...",
-		})
-		return
-	}
-
-	if body.GoogleID != "" {
-		if body.GoogleID != user.GoogleID {
-			c.JSON(http.StatusBadRequest, gin.H{
-				"error": "Cuenta google invalida, Hacer registro primero ...",
-			})
-			return
-		}
-	}
-
-	if body.Password != "" {
-		err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(body.Password))
-		if err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{
-				"error": "Correo o clave invalido ...",
-			})
-			return
-		}
-
-	}
-
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"sub": user.ID,
-		"exp": time.Now().Add(time.Hour * 2).Unix(),
-	})
-
-	tokenString, err := token.SignedString([]byte(os.Getenv("SECRET")))
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"error": "Fallo al crear token ...",
-		})
-		return
-	}
-
-	/* cookie := http.Cookie{}
-	cookie.Name = "Authorization"
-	cookie.Value = tokenString
-	cookie.Expires = time.Now().Add(24)
-	cookie.MaxAge = 3600
-	cookie.Secure = false
-	cookie.HttpOnly = true
-	cookie.Path = "/"
-	cookie.SameSite = http.SameSiteNoneMode
-	*/ //http.SetCookie(c.Writer, &cookie)
-	c.SetSameSite(http.SameSiteLaxMode)
-	c.SetCookie("Authorization", tokenString, 3600*2, "/", "localhost", false, true)
-	//
-	// respond with token
-}
-
-func Validate(c *gin.Context) {
-	user, _ := c.Get("user")
-
-	c.JSON(http.StatusOK, gin.H{
-		"messaje": user,
-	})
+	c.JSON(http.StatusOK, gin.H{"status": "success", "results": len(users), "data": users})
 }
