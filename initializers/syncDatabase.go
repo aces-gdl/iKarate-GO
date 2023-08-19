@@ -9,6 +9,10 @@ func SyncDatabase() {
 		&models.Permission{},
 		&models.Tournament{},
 		&models.Category{},
-		&models.Permission{})
-
+		&models.Permission{},
+		&models.TournamentTeam{},
+		&models.TournamentEnrollment{},
+		&models.TournamentGroup{},
+		&models.TournamentTeamByGroup{},
+		&models.TournamentTimeSlots{})
 }

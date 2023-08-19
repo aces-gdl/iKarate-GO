@@ -1,16 +1,16 @@
 @host = localhost:3500
 
-
+≈
 POST http://{{host}}/v1/security/signup
 content-type: application/json
 
 {
-    "Email":"participante2@gmail.com",
-    "Password":"password1",
-    "FamilyName": "Participante 2",
-    "GivenName":"Participante 2",
+    "Email":"juan.navarro68@gmail.com",
+    "FamilyName": "Navarro",
+    "GivenName":"Juan",
     "ImageURL":"https://lh3.googleusercontent.com/a/AEdFTp6fK7kniHV6u_TKMiqMy1blxuVJetbTPfdA5ASuqA=s96-c",
-    "Name":"Participante2",
+    "Name":"Juan Navarro",
+     "GoogleID":"111751505227207835600",
     "CategoryID":"4234c285-5bab-49bf-a5d7-c34ff27ee256",
     "PermissionID":"ffb9b6a3-5c49-4b0f-90a4-2338b93154b9"
 }
@@ -34,113 +34,49 @@ GET http://{{host}}/v1/catalogs/club
 
 ###
 
-POST http://{{host}}/v1/catalogs/club&page=2
-content-type: application/json
+POST http://{{host}}/v1/catalgs/creategroups
+Content-Type: application/json
 
 {
-	"Name":"Doopla Padel Club",
-	"Description": "Doppla Padel Club",
-	"Contact":"Mario",
-	"Address": "Puerto Vallarta",
-	"Phone": "33 3234-3456"
+    "CategoryID": "4234c285-5bab-49bf-a5d7-c34ff27ee256",
+    "TournamentID": "0ee678be-5532-450f-883e-9a577b45652a"
 }
-
-POST http://{{host}}/v1/catalogs/club
-content-type: application/json
+###
+POST http://{{host}}/v1/catalgs/simulateenrollment
+Content-Type: application/json
 
 {
-	"Name":"GDL Padel Club",
-	"Description": "GDL Padel Club",
-	"Contact":"Mario",
-	"Address": "Calle 2",
-	"Phone": "33 3234-3456"
+    "CategoryID": "4234c285-5bab-49bf-a5d7-c34ff27ee256",
+    "UserCount": 34,
+    "TournamentID": "0ee678be-5532-450f-883e-9a577b45652a"
 }
-POST http://{{host}}/v1/catalogs/club
-content-type: application/json
-
-{
-	"Name":"GDL Padel Club",
-	"Description": "GDL Padel Club",
-	"Contact":"Mario",
-	"Address": "Calle 2",
-	"Phone": "33 3234-3456"
-}
+###
+GET  http://{{host}}/v1/catalogos/getteams?CategoryID=4234c285-5bab-49bf-a5d7-c34ff27ee256&TournamentID=0ee678be-5532-450f-883e-9a577b45652a
+Content-Type: application/json
 
 ###
+
+GET  http://{{host}}/v1/catalogos/getteamsbygroup?CategoryID=4234c285-5bab-49bf-a5d7-c34ff27ee256&TournamentID=0ee678be-5532-450f-883e-9a577b45652a
+Content-Type: application/json
+
+###
+POST http://{{host}}/v1/catalogs/club
+content-type: application/json
+
+{
+	"Name":"Altium ",
+	"Description": "Altium Padel Center",
+	"Contact":"Sofi",
+	"Address": "Zona Real",
+	"Phone": "33 3234-3456"
+}
+###
+
+GET http://{{host}}/v1/catalogs/clubs
+Content-Type: application/json
+
+###
+
 GET http://{{host}}/v1/catalogs/court
 Content-Type: application/json
-
-
-###
-POST http://{{host}}/v1/catalogs/court
-Content-Type: application/json
-
-{
-    "Name":"Cancha 1",
-    "Indoors":false,
-    "ClubID":"11933517-f647-406d-818f-8f765fbe86fc"
-}
-
-POST http://{{host}}/v1/catalogs/court
-Content-Type: application/json
-
-{
-    "Name":"Cancha 2",
-    "Indoors":false,
-    "ClubID":"11933517-f647-406d-818f-8f765fbe86fc"
-}
-
-POST http://{{host}}/v1/catalogs/court
-Content-Type: application/json
-
-{
-    "Name":"Cancha 3",
-    "Indoors":false,
-    "ClubID":"11933517-f647-406d-818f-8f765fbe86fc"
-}
-POST http://{{host}}/v1/catalogs/court
-Content-Type: application/json
-
-{
-    "Name":"Cancha 4",
-    "Indoors":false,
-    "ClubID":"11933517-f647-406d-818f-8f765fbe86fc"
-}
-
-POST http://{{host}}/v1/catalogs/court
-Content-Type: application/json
-
-{
-    "Name":"Cancha 5",
-    "Indoors":false,
-    "ClubID":"11933517-f647-406d-818f-8f765fbe86fc"
-}
-
-POST http://{{host}}/v1/catalogs/court
-Content-Type: application/json
-
-{
-    "Name":"Cancha 6",
-    "Indoors":false,
-    "ClubID":"11933517-f647-406d-818f-8f765fbe86fc"
-}
-
-POST http://{{host}}/v1/catalogs/court
-Content-Type: application/json
-
-{
-    "Name":"Cancha 7",
-    "Indoors":false,
-    "ClubID":"11933517-f647-406d-818f-8f765fbe86fc"
-}
-
-POST http://{{host}}/v1/catalogs/court
-Content-Type: application/json
-
-{
-    "Name":"Cancha 8",
-    "Indoors":false,
-    "ClubID":"11933517-f647-406d-818f-8f765fbe86fc"
-}
-
 ###

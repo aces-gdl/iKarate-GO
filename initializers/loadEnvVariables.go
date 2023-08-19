@@ -14,6 +14,6 @@ func LoadEnvVariables() {
 		log.Fatal("Error cargando archivo .env")
 	}
 
-	fmt.Println("...Inicializado")
+	fmt.Println("...Inicializando")
 
 }

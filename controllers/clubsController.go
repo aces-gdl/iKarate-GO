@@ -7,6 +7,7 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm/clause"
 )
 
 func PostClub(c *gin.Context) {
@@ -47,7 +48,7 @@ func GetClubs(c *gin.Context) {
 	offset := (intPage - 1) * intLimit
 
 	var clubs []models.Club
-	results := initializers.DB.Limit(intLimit).Offset(offset).Find(&clubs)
+	results := initializers.DB.Preload(clause.Associations).Limit(intLimit).Offset(offset).Find(&clubs)
 	if results.Error != nil {
 		c.JSON(http.StatusBadGateway, gin.H{"status": "error", "message": results.Error})
 		return
