@@ -26,9 +26,11 @@ content-type: application/json
 }
 
 ### Users
-GET http://{{host}}/v1/catalogs/user
-?page=3&limit=50
+GET http://{{host}}/v1/catalogs/users
+?page=1&limit=50&CategoryID=71055687-9697-4e71-8f12-4902011e048a
 content-type: application/json
+//&CategoryID=4234c285-5bab-49bf-a5d7-c34ff27ee256
+//&ID=0d858485-122b-4070-b8d0-a2ced1805c46
 ###
 GET http://{{host}}/v1/catalogs/club
 
@@ -70,6 +72,19 @@ content-type: application/json
 	"Address": "Zona Real",
 	"Phone": "33 3234-3456"
 }
+###
+POST http://{{host}}/v1/catalogs/category
+content-type: application/json
+
+{
+    "Description":"Cuarta 4ta Femenil",
+    "Level":"4",
+    "Active":"true"
+}
+###
+GET http://{{host}}/v1/catalogs/categories?limit=-1
+content-type: application/json
+
 ###
 
 GET http://{{host}}/v1/catalogs/clubs

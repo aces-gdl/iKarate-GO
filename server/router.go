@@ -18,10 +18,15 @@ func NewRouter() *gin.Engine {
 	router.POST("/v1/security/login", controllers.Login)
 	router.GET("/v1/security/validate", middleware.RequireAuth, controllers.Validate)
 
-	router.GET("/v1/catalogs/user", middleware.RequireAuth, controllers.GetUsers)
+	router.GET("/v1/catalogs/users", middleware.RequireAuth, controllers.GetUsers)
 
 	router.POST("/v1/catalogs/club", middleware.RequireAuth, controllers.PostClub)
 	router.GET("/v1/catalogs/clubs", middleware.RequireAuth, controllers.GetClubs)
+
+	router.POST("/v1/catalogs/category", middleware.RequireAuth, controllers.PostCategory)
+	router.GET("/v1/catalogs/categories", middleware.RequireAuth, controllers.GetCatgories)
+
+	router.GET("/v1/catalogs/permissions", middleware.RequireAuth, controllers.GetPermissions)
 
 	router.POST("/v1/catalogs/court", middleware.RequireAuth, controllers.PostCourts)
 	router.GET("/v1/catalogs/court", middleware.RequireAuth, controllers.GetCourts)
@@ -31,6 +36,8 @@ func NewRouter() *gin.Engine {
 	router.POST("/v1/catalgs/creategroups", middleware.RequireAuth, controllers.PostCreateGroups)
 	router.GET("/v1/catalogs/getteams", middleware.RequireAuth, controllers.GetEnrolledTeams)
 	router.GET("/v1/catalogs/getteamsbygroup", middleware.RequireAuth, controllers.GetGroups)
+
+	router.POST("/v1/utility/loadusers", middleware.RequireAuth, controllers.PostLoadUsers)
 
 	return router
 }

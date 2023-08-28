@@ -17,6 +17,7 @@ type Tournament struct {
 	EndDate        time.Time
 	HostClubID     uuid.UUID `gorm:type:uuid;`
 	Club           Club      `gorm:"foreignKey:HostClubID;references:ID"`
+	GameDuration   int
 	NumberOfCourts int
 	Active         bool
 }

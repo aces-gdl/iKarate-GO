@@ -1,18 +1,106 @@
 package controllers
 
 import (
+	"bufio"
 	"fmt"
 	"iKarate-GO/initializers"
 	"iKarate-GO/models"
 	"net/http"
 	"strconv"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
+	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm/clause"
 )
 
 func GetSuscribed(c *gin.Context) {
+}
+
+func PostLoadUsers(c *gin.Context) {
+	fileHeader, err := c.FormFile("file")
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "Archivo no esta presente...",
+		})
+		return
+	}
+
+	CategoryDesc := c.PostForm("CategoryDesc")
+	if CategoryDesc == "" {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "Categoria requerida, no esta presente...",
+		})
+		return
+	}
+
+	PermissionDesc := c.PostForm("PermissionDesc")
+	if PermissionDesc == "" {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "Permiso es requerido, no esta presente...",
+		})
+		return
+	}
+
+	var Category models.Category
+	result := initializers.DB.Where("description = ?", CategoryDesc).First(&Category)
+	if result.Error != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "Error buscando Categoria...",
+		})
+		return
+	}
+
+	var Permission models.Permission
+	result = initializers.DB.Where("description = ?", PermissionDesc).First(&Permission)
+	if result.Error != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "Error buscando Permisos...",
+		})
+		return
+	}
+
+	fileToImport, err := fileHeader.Open()
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "Archivo no esta presente...",
+		})
+		return
+	}
+	defer fileToImport.Close()
+
+	fileScanner := bufio.NewScanner(fileToImport)
+
+	fileScanner.Split(bufio.ScanLines)
+
+	// Create password default
+
+	hash, err := bcrypt.GenerateFromPassword([]byte("APJ123"), 10)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "Fallo al convertir password a hash...",
+		})
+		return
+	}
+
+	var pwdDefault = string(hash)
+	for fileScanner.Scan() {
+		var user models.User
+		arrayUser := strings.Split(fileScanner.Text(), ",")
+		user.GivenName = arrayUser[0]
+		user.FamilyName = arrayUser[1]
+		user.Email = arrayUser[2]
+		user.Ranking, _ = strconv.Atoi(arrayUser[3])
+		user.Name = fmt.Sprintf("%s, %s", user.GivenName, user.FamilyName)
+		user.CategoryID = Category.ID
+		user.PermissionID = Permission.ID
+		user.Password = pwdDefault
+
+		initializers.DB.Create(&user)
+	}
+
+	c.JSON(http.StatusOK, gin.H{})
 }
 
 func PostSimulateEnrollment(c *gin.Context) {
@@ -243,15 +331,6 @@ func GetEnrolledTeams(c *gin.Context) {
 }
 
 func GetGroups(c *gin.Context) {
-	/*
-		var page = c.DefaultQuery("page", "1")
-		var limit = c.DefaultQuery("limit", "10")
-
-
-			intPage, _ := strconv.Atoi(page)
-			intLimit, _ := strconv.Atoi(limit)
-			//offset := (intPage - 1) * intLimit
-	*/
 	var tournamentID = c.DefaultQuery("TournamentID", "")
 	var categoryID = c.DefaultQuery("CategoryID", "")
 
