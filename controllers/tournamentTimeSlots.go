@@ -11,13 +11,9 @@ func PostCreateTimeSlots(c *gin.Context) {
 
 	var dailyFirstGameStart = time.Date(2023, 9, 6, 17, 0, 0, 0, time.Local)
 	var dailyLastGameStart = time.Date(2023, 9, 6, 22, 0, 0, 0, time.Local)
-	var gameDuration = 60 * time.Minute // in minutes
-	var availableCourtCount = 3
-	/*
+	var gameDuration = 90 * time.Minute // in minutes
+	var availableCourtCount = 5
 
-		var roundRobinDays = 4
-
-	*/
 	var gamesPerDayPerCourt = int(dailyLastGameStart.Sub(dailyFirstGameStart) / gameDuration)
 	var gamesPerDay = gamesPerDayPerCourt * availableCourtCount
 	var roundrobinAvailableSlots = gamesPerDay * availableCourtCount
@@ -25,7 +21,14 @@ func PostCreateTimeSlots(c *gin.Context) {
 	fmt.Println("Games per court per day ", int(dailyLastGameStart.Sub(dailyFirstGameStart)/gameDuration))
 	fmt.Println("Games per day", gamesPerDay)
 	fmt.Println("Total round robin available slots", roundrobinAvailableSlots)
+	/*
+	     TODO:
+	     	- Persist records one per each slot in the DB
+	   		- Define how the slots will be identified in human readable way i.e. <DAY>-<Court>-<Game> = 2-1-5 Day 2, Court 2, Game 5
+	   		- Define representation of the game schedule
 
+
+	*/
 	/*
 
 		for i := 0; i < 5; i++ {
