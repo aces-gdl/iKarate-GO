@@ -1,1 +1,1 @@
-/Users/juan.navarro/go/bin/CompileDaemon -command="./iKarate-GO"
+/Users/juan.navarro/go/bin/CompileDaemon -command="./iPadel-GO"

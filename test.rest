@@ -29,8 +29,6 @@ content-type: application/json
 GET http://{{host}}/v1/catalogs/users
 ?page=1&limit=50&CategoryID=71055687-9697-4e71-8f12-4902011e048a
 content-type: application/json
-//&CategoryID=4234c285-5bab-49bf-a5d7-c34ff27ee256
-//&ID=0d858485-122b-4070-b8d0-a2ced1805c46
 ###
 GET http://{{host}}/v1/catalogs/club
 
@@ -86,6 +84,10 @@ GET http://{{host}}/v1/catalogs/categories?limit=-1
 content-type: application/json
 
 ###
+GET http://{{host}}/v1/catalogs/tournaments?limit=-1
+content-type: application/json
+
+###
 
 GET http://{{host}}/v1/catalogs/clubs
 Content-Type: application/json
@@ -93,5 +95,8 @@ Content-Type: application/json
 ###
 
 GET http://{{host}}/v1/catalogs/court
+Content-Type: application/json
+###
+POST http://{{host}}/v1/utility/createtimeslots
 Content-Type: application/json
 ###

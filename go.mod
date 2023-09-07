@@ -1,4 +1,4 @@
-module iKarate-GO
+module iPadel-GO
 
 go 1.19
 

@@ -3,8 +3,8 @@ package controllers
 import (
 	"bufio"
 	"fmt"
-	"iKarate-GO/initializers"
-	"iKarate-GO/models"
+	"iPadel-GO/initializers"
+	"iPadel-GO/models"
 	"net/http"
 	"strconv"
 	"strings"
@@ -27,24 +27,12 @@ func PostLoadUsers(c *gin.Context) {
 		return
 	}
 
-	CategoryDesc := c.PostForm("CategoryDesc")
-	if CategoryDesc == "" {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"error": "Categoria requerida, no esta presente...",
-		})
-		return
-	}
+	CategoryID := c.PostForm("CategoryID")
 
-	PermissionDesc := c.PostForm("PermissionDesc")
-	if PermissionDesc == "" {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"error": "Permiso es requerido, no esta presente...",
-		})
-		return
-	}
+	PermissionID := c.PostForm("PermissionID")
 
 	var Category models.Category
-	result := initializers.DB.Where("description = ?", CategoryDesc).First(&Category)
+	result := initializers.DB.Where("ID = ?", CategoryID).First(&Category)
 	if result.Error != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error": "Error buscando Categoria...",
@@ -53,7 +41,7 @@ func PostLoadUsers(c *gin.Context) {
 	}
 
 	var Permission models.Permission
-	result = initializers.DB.Where("description = ?", PermissionDesc).First(&Permission)
+	result = initializers.DB.Where("ID = ?", PermissionID).First(&Permission)
 	if result.Error != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error": "Error buscando Permisos...",
@@ -106,7 +94,7 @@ func PostLoadUsers(c *gin.Context) {
 func PostSimulateEnrollment(c *gin.Context) {
 	var body struct {
 		CategoryID   uuid.UUID
-		UserCount    int
+		UserCount    string
 		TournamentID uuid.UUID
 	}
 
@@ -117,8 +105,9 @@ func PostSimulateEnrollment(c *gin.Context) {
 		return
 	}
 	// Buscar Usuarios
+	userCount, _ := strconv.Atoi(body.UserCount)
 	var users []models.User
-	results := initializers.DB.Preload(clause.Associations).Limit(body.UserCount).Find(&users)
+	results := initializers.DB.Preload(clause.Associations).Limit(userCount).Find(&users)
 	if results.Error != nil {
 		c.JSON(http.StatusBadGateway, gin.H{"status": "error", "message": results.Error})
 		return

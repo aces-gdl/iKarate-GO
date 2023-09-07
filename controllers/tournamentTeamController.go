@@ -1,8 +1,8 @@
 package controllers
 
 import (
-	"iKarate-GO/initializers"
-	"iKarate-GO/models"
+	"iPadel-GO/initializers"
+	"iPadel-GO/models"
 	"net/http"
 
 	"github.com/gin-gonic/gin"

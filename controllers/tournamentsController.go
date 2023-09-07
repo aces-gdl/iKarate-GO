@@ -7,9 +7,10 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm/clause"
 )
 
-func GetPermissions(c *gin.Context) {
+func GetTournaments(c *gin.Context) {
 	var page = c.DefaultQuery("page", "1")
 	var limit = c.DefaultQuery("limit", "10")
 
@@ -17,12 +18,12 @@ func GetPermissions(c *gin.Context) {
 	intLimit, _ := strconv.Atoi(limit)
 	offset := (intPage - 1) * intLimit
 
-	var permissions []models.Permission
-	results := initializers.DB.Order("description asc").Limit(intLimit).Offset(offset).Find(&permissions)
+	var tournaments []models.Tournament
+	results := initializers.DB.Preload(clause.Associations).Limit(intLimit).Offset(offset).Find(&tournaments)
 	if results.Error != nil {
 		c.JSON(http.StatusBadGateway, gin.H{"status": "error", "message": results.Error})
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"status": "success", "results": len(permissions), "data": permissions})
+	c.JSON(http.StatusOK, gin.H{"status": "success", "results": len(tournaments), "data": tournaments})
 }

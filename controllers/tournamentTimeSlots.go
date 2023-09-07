@@ -2,37 +2,59 @@ package controllers
 
 import (
 	"fmt"
-	"iKarate-GO/initializers"
-	"iKarate-GO/models"
-	"net/http"
+	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/google/uuid"
 )
 
 func PostCreateTimeSlots(c *gin.Context) {
 
-	var body struct {
-		TournamentID uuid.UUID
-	}
+	var dailyFirstGameStart = time.Date(2023, 9, 6, 17, 0, 0, 0, time.Local)
+	var dailyLastGameStart = time.Date(2023, 9, 6, 22, 0, 0, 0, time.Local)
+	var gameDuration = 60 * time.Minute // in minutes
+	var availableCourtCount = 3
+	/*
 
-	if c.Bind(&body) != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"error": "Fallo al leer body...",
-		})
-		return
-	}
+		var roundRobinDays = 4
 
-	var tournament models.Tournament
+	*/
+	var gamesPerDayPerCourt = int(dailyLastGameStart.Sub(dailyFirstGameStart) / gameDuration)
+	var gamesPerDay = gamesPerDayPerCourt * availableCourtCount
+	var roundrobinAvailableSlots = gamesPerDay * availableCourtCount
 
-	result := initializers.DB.Where("ID = ?", body.TournamentID).First(&tournament)
+	fmt.Println("Games per court per day ", int(dailyLastGameStart.Sub(dailyFirstGameStart)/gameDuration))
+	fmt.Println("Games per day", gamesPerDay)
+	fmt.Println("Total round robin available slots", roundrobinAvailableSlots)
 
-	if result.Error != nil {
-		c.JSON(http.StatusNotFound, gin.H{
-			"error": "Torneo no encontrado...",
-		})
-		return
+	/*
 
-	}
-	fmt.Println(tournament)
+		for i := 0; i < 5; i++ {
+			fmt.Println(startDate)
+			startDate = startDate.Add(60 * time.Minute)
+		}
+
+			var body struct {
+				TournamentID uuid.UUID
+			}
+
+			if c.Bind(&body) != nil {
+				c.JSON(http.StatusBadRequest, gin.H{
+					"error": "Fallo al leer body...",
+				})
+				return
+			}
+
+			var tournament models.Tournament
+
+			result := initializers.DB.Where("ID = ?", body.TournamentID).First(&tournament)
+
+			if result.Error != nil {
+				c.JSON(http.StatusNotFound, gin.H{
+					"error": "Torneo no encontrado...",
+				})
+				return
+
+			}
+			fmt.Println(tournament)
+	*/
 }

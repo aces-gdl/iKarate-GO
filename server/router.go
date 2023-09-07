@@ -1,8 +1,8 @@
 package server
 
 import (
-	"iKarate-GO/controllers"
-	"iKarate-GO/middleware"
+	"iPadel-GO/controllers"
+	"iPadel-GO/middleware"
 
 	"github.com/gin-gonic/gin"
 )
@@ -31,6 +31,7 @@ func NewRouter() *gin.Engine {
 	router.POST("/v1/catalogs/court", middleware.RequireAuth, controllers.PostCourts)
 	router.GET("/v1/catalogs/court", middleware.RequireAuth, controllers.GetCourts)
 	router.GET("/v1/catalogs/court/byclub", middleware.RequireAuth, controllers.GetCourtsByClub)
+	router.GET("/v1/catalogs/tournaments", middleware.RequireAuth, controllers.GetTournaments)
 
 	router.POST("/v1/catalgs/simulateenrollment", middleware.RequireAuth, controllers.PostSimulateEnrollment)
 	router.POST("/v1/catalgs/creategroups", middleware.RequireAuth, controllers.PostCreateGroups)
@@ -38,6 +39,7 @@ func NewRouter() *gin.Engine {
 	router.GET("/v1/catalogs/getteamsbygroup", middleware.RequireAuth, controllers.GetGroups)
 
 	router.POST("/v1/utility/loadusers", middleware.RequireAuth, controllers.PostLoadUsers)
+	router.POST("/v1/utility/createtimeslots", middleware.RequireAuth, controllers.PostCreateTimeSlots)
 
 	return router
 }

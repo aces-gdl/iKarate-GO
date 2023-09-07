@@ -1,8 +1,8 @@
 package main
 
 import (
-	"iKarate-GO/initializers"
-	"iKarate-GO/server"
+	"iPadel-GO/initializers"
+	"iPadel-GO/server"
 )
 
 func init() {

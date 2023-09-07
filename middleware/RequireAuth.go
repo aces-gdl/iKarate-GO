@@ -2,8 +2,8 @@ package middleware
 
 import (
 	"fmt"
-	"iKarate-GO/initializers"
-	"iKarate-GO/models"
+	"iPadel-GO/initializers"
+	"iPadel-GO/models"
 	"net/http"
 	"os"
 	"time"
