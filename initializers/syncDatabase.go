@@ -16,5 +16,6 @@ func SyncDatabase() {
 		&models.TournamentTeamByGroup{},
 		&models.TournamentTimeSlots{},
 		&models.TournamentCategories{},
-		&models.TournamentGames{})
+		&models.TournamentGames{},
+		&models.TournamentTimeSlots{})
 }

@@ -33,13 +33,14 @@ func NewRouter() *gin.Engine {
 	router.GET("/v1/catalogs/court/byclub", middleware.RequireAuth, controllers.GetCourtsByClub)
 	router.GET("/v1/catalogs/tournaments", middleware.RequireAuth, controllers.GetTournaments)
 
-	router.POST("/v1/catalgs/simulateenrollment", middleware.RequireAuth, controllers.PostSimulateEnrollment)
-	router.POST("/v1/catalgs/creategroups", middleware.RequireAuth, controllers.PostCreateGroups)
-	router.GET("/v1/catalogs/getteams", middleware.RequireAuth, controllers.GetEnrolledTeams)
-	router.GET("/v1/catalogs/getteamsbygroup", middleware.RequireAuth, controllers.GetGroups)
+	router.POST("/v1/tournament/simulateenrollment", middleware.RequireAuth, controllers.PostSimulateEnrollment)
+	router.POST("/v1/tournament/creategroups", middleware.RequireAuth, controllers.PostCreateGroups)
+	router.GET("/v1/tournament/getteams", middleware.RequireAuth, controllers.GetEnrolledTeams)
+	router.GET("/v1/tournament/getteamsbygroup", middleware.RequireAuth, controllers.GetGroups)
+	router.POST("/v1/tournament/createtimeslots", middleware.RequireAuth, controllers.PostCreateTimeSlots)
 
+	router.GET("/v1/tournament/enrolledteams", middleware.RequireAuth, controllers.GetEnrolledTeams)
 	router.POST("/v1/utility/loadusers", middleware.RequireAuth, controllers.PostLoadUsers)
-	router.POST("/v1/utility/createtimeslots", middleware.RequireAuth, controllers.PostCreateTimeSlots)
 
 	return router
 }

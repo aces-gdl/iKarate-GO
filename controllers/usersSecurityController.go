@@ -127,16 +127,6 @@ func Login(c *gin.Context) {
 		return
 	}
 
-	/* cookie := http.Cookie{}
-	cookie.Name = "Authorization"
-	cookie.Value = tokenString
-	cookie.Expires = time.Now().Add(24)
-	cookie.MaxAge = 3600
-	cookie.Secure = false
-	cookie.HttpOnly = true
-	cookie.Path = "/"
-	cookie.SameSite = http.SameSiteNoneMode
-	*/ //http.SetCookie(c.Writer, &cookie)
 	c.SetSameSite(http.SameSiteLaxMode)
 	c.SetCookie("Authorization", tokenString, 3600*2, "/", "localhost", false, true)
 	//
