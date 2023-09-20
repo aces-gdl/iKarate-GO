@@ -65,7 +65,7 @@ func PostSimulateEnrollment(c *gin.Context) {
 			return
 		}
 
-		team.Name = fmt.Sprintf("Pareja  - %d", i+1)
+		team.Name = fmt.Sprintf("Pareja  - %02d", i+1)
 		team.TournamentID = body.TournamentID
 		team.CategoryID = body.CategoryID
 

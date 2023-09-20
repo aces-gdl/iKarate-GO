@@ -5,8 +5,10 @@ import (
 	"iPadel-GO/models"
 	"net/http"
 	"strconv"
+	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 	"gorm.io/gorm/clause"
 )
 
@@ -26,4 +28,47 @@ func GetTournaments(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{"status": "success", "results": len(tournaments), "data": tournaments})
+}
+
+func PostTournaments(c *gin.Context) {
+	//var body models.Tournament
+
+	var body struct {
+		Description    string
+		StartDate      string
+		EndDate        string
+		HostClubID     string
+		GameDuration   int
+		NumberOfCourts int
+		Active         bool
+	}
+
+	if c.Bind(&body) != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "Fallo al leer body...",
+		})
+		return
+	}
+	startDate, _ := time.Parse("2006-01-02", body.StartDate)
+	endDate, _ := time.Parse("2006-01-02", body.EndDate)
+	clubID, _ := uuid.Parse(body.HostClubID)
+	tournament := models.Tournament{
+		Description:    body.Description,
+		StartDate:      startDate,
+		EndDate:        endDate,
+		HostClubID:     clubID,
+		NumberOfCourts: body.NumberOfCourts,
+		GameDuration:   body.GameDuration,
+		Active:         body.Active,
+	}
+	//fmt.Println(tournament)
+	result := initializers.DB.Create(&tournament)
+	if result.Error != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "Fallo al crear torneo... ",
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{})
 }

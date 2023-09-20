@@ -14,6 +14,6 @@ type TournamentGroup struct {
 	DeletedAt    gorm.DeletedAt `gorm:"index"`
 	Name         string         `gorm:"unique"`
 	GroupNumber  int
-	CategoryID   uuid.UUID `gorm:type:uuid;`
-	TournamentID uuid.UUID `gorm:type:uuid;`
+	CategoryID   uuid.UUID `gorm:"type:uuid;"`
+	TournamentID uuid.UUID `gorm:"type:uuid;"`
 }

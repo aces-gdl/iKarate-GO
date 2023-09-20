@@ -65,7 +65,7 @@ func PostCreateGroups(c *gin.Context) {
 	for i := 0; i < groupsCounterFinal; i++ {
 		var group models.TournamentGroup
 		fmt.Println("group ", i+1)
-		group.Name = fmt.Sprintf("Grupo - %d", i+1)
+		group.Name = fmt.Sprintf("Grupo - %02d", i+1)
 		group.TournamentID = body.TournamentID
 		group.CategoryID = body.CategoryID
 		group.GroupNumber = i + 1
@@ -92,7 +92,7 @@ func PostCreateGroups(c *gin.Context) {
 		teamByGroup.CategoryID = body.CategoryID
 		teamByGroup.GroupID = groups[groupSelector].ID
 		teamByGroup.GroupNumber = groupSelector + 1
-		teamByGroup.Name = fmt.Sprintf("Equipo : %d", teamCounterByGroup)
+		teamByGroup.Name = fmt.Sprintf("Equipo : %02d", teamCounterByGroup)
 		teamByGroup.TeamID = teams[teamSelector].ID
 		initializers.DB.Create(&teamByGroup)
 		if goingUp {
@@ -127,11 +127,75 @@ func PostCreateGroups(c *gin.Context) {
 			teamByGroup.CategoryID = body.CategoryID
 			teamByGroup.GroupID = groups[groupsCounterFinal-1].ID
 			teamByGroup.GroupNumber = groupsCounterFinal
-			teamByGroup.Name = fmt.Sprintf("Equipo : %d", teamCounterByGroup)
+			teamByGroup.Name = fmt.Sprintf("Equipo : %02d", teamCounterByGroup)
 			teamByGroup.TeamID = teams[i].ID
 			initializers.DB.Create(&teamByGroup)
 			teamCounterByGroup++
 		}
+	}
+
+	// Crear Juegos
+
+	type Game struct {
+		Team1 int
+		Team2 int
+	}
+
+	var roleOfGames []Game
+
+	AddNewGame := func(team1 int, team2 int) {
+		var gameNotFound = true
+		for i := 0; i < len(roleOfGames); i++ {
+			if (roleOfGames[i].Team1 == team1 && roleOfGames[i].Team2 == team2) || (roleOfGames[i].Team1 == team2 && roleOfGames[i].Team2 == team1) {
+				gameNotFound = false
+				break
+			}
+		}
+		if gameNotFound {
+			var newGame = Game{Team1: team1, Team2: team2}
+			roleOfGames = append(roleOfGames, newGame)
+		}
+	}
+
+	CreateGames := func(TournamentID uuid.UUID, CategoryID uuid.UUID, teams []models.TournamentTeamByGroup) {
+		var numOfTeams int = len(teams)
+		roleOfGames = nil
+
+		for i := 0; i < numOfTeams; i++ {
+			for x := 0; x < numOfTeams; x++ {
+				if i != x {
+					AddNewGame(i, x)
+				}
+			}
+		}
+
+		for i := 0; i < len(roleOfGames); i++ {
+			fmt.Println("Game ", i+1, " --> Team 1: ", roleOfGames[i].Team1, " vs Team 2:", roleOfGames[i].Team2)
+			var newGame models.TournamentGames
+			newGame.TournamentID = TournamentID
+			newGame.CategoryID = CategoryID
+			newGame.TournamentGroupID = teams[roleOfGames[i].Team1].GroupID
+			newGame.Team1ID = teams[roleOfGames[i].Team1].ID
+			newGame.Team2ID = teams[roleOfGames[i].Team2].ID
+
+			initializers.DB.Create(&newGame)
+		}
+	}
+
+	var tournamentGroup []models.TournamentGroup
+	results = initializers.DB.Where("tournament_id = ? AND category_id = ?", body.TournamentID, body.CategoryID).Order("group_number").Find(&tournamentGroup)
+	if results.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "Grupos no existen... ",
+		})
+		return
+	}
+
+	var teamsByGroup []models.TournamentTeamByGroup
+	for i := 0; i < len(tournamentGroup); i++ {
+		fmt.Println("Partidos grupo : ", tournamentGroup[i].GroupNumber)
+		results = initializers.DB.Where("group_id = ?", tournamentGroup[i].ID).Find(&teamsByGroup)
+		CreateGames(body.TournamentID, body.CategoryID, teamsByGroup)
 	}
 
 }

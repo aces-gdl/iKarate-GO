@@ -19,7 +19,7 @@ type User struct {
 	Name         string
 	FamilyName   string
 	GivenName    string
-	PermissionID uuid.UUID `gorm:type:uuid;default:null;`
+	PermissionID uuid.UUID `gorm:"type:uuid;default:null;"`
 	Ranking      int
-	CategoryID   uuid.UUID `gorm:type:uuid;default:null;`
+	CategoryID   uuid.UUID `gorm:"type:uuid;default:null;"`
 }

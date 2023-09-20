@@ -32,6 +32,7 @@ func NewRouter() *gin.Engine {
 	router.GET("/v1/catalogs/court", middleware.RequireAuth, controllers.GetCourts)
 	router.GET("/v1/catalogs/court/byclub", middleware.RequireAuth, controllers.GetCourtsByClub)
 	router.GET("/v1/catalogs/tournaments", middleware.RequireAuth, controllers.GetTournaments)
+	router.POST("/v1/catalogs/tournaments", middleware.RequireAuth, controllers.PostTournaments)
 
 	router.POST("/v1/tournament/simulateenrollment", middleware.RequireAuth, controllers.PostSimulateEnrollment)
 	router.POST("/v1/tournament/creategroups", middleware.RequireAuth, controllers.PostCreateGroups)

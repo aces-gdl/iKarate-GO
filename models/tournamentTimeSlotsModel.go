@@ -12,12 +12,12 @@ type TournamentTimeSlots struct {
 	CreatedAt    time.Time
 	UpdatedAt    time.Time
 	DeletedAt    gorm.DeletedAt `gorm:"index"`
-	TournamentID uuid.UUID      `gorm:type:uuid;`
-	CategoryID   uuid.UUID      `gorm:type:uuid;`
+	TournamentID uuid.UUID      `gorm:"type:uuid;"`
+	CategoryID   uuid.UUID      `gorm:"type:uuid;"`
 	Description  string
 	StartTime    time.Time
 	EndTime      time.Time
-	GameID       uuid.UUID `gorm:type:uuid;`
+	GameID       uuid.UUID `gorm:"type:uuid;"`
 	Taken        bool
 	Active       bool
 }

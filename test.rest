@@ -1,6 +1,6 @@
 @host = localhost:3500
 
-≈
+
 POST http://{{host}}/v1/security/signup
 content-type: application/json
 
@@ -24,6 +24,20 @@ content-type: application/json
     "Password":"",
     "GoogleID":"111751505227207835600"
 }
+###
+POST http://{{host}}/v1/catalogs/tournaments
+content-type: application/json
+
+{
+   "Description" : "Torneo de tercera fuerza varonil",
+	"StartDate"  : "2023-10-02",
+	"EndDate"    : "2023-10-08",
+	"HostClubID" : "fd9b93a1-825a-4bab-b8c0-9a3299594d08",
+	"GameDuration" :  60,
+	"NumberOfCourts" : 4,
+	"Active"     :    true
+}
+
 
 ### Users
 GET http://{{host}}/v1/catalogs/users

@@ -10,6 +10,7 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -22,9 +23,9 @@ func PostLoadUsers(c *gin.Context) {
 		return
 	}
 
-	CategoryID := c.PostForm("CategoryID")
+	CategoryID, _ := uuid.Parse(c.PostForm("CategoryID"))
 
-	PermissionID := c.PostForm("PermissionID")
+	PermissionID, _ := uuid.Parse(c.PostForm("PermissionID"))
 
 	var Category models.Category
 	result := initializers.DB.Where("ID = ?", CategoryID).First(&Category)
