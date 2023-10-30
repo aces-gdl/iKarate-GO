@@ -1,8 +1,8 @@
 package server
 
 import (
-	"iPadel-GO/controllers"
-	"iPadel-GO/middleware"
+	"iKarate-GO/controllers"
+	"iKarate-GO/middleware"
 
 	"github.com/gin-gonic/gin"
 )
@@ -20,28 +20,18 @@ func NewRouter() *gin.Engine {
 
 	router.GET("/v1/catalogs/users", middleware.RequireAuth, controllers.GetUsers)
 
-	router.POST("/v1/catalogs/club", middleware.RequireAuth, controllers.PostClub)
-	router.GET("/v1/catalogs/clubs", middleware.RequireAuth, controllers.GetClubs)
+	router.GET("/v1/catalogs/permissions", middleware.RequireAuth, controllers.GetPermissions)
+	router.POST("/v1/catalogs/permissions", middleware.RequireAuth, controllers.PostPermissions)
+
+	router.GET("/v1/catalogs/dojos", middleware.RequireAuth, controllers.GetDojos)
+	router.POST("/v1/catalogs/dojos", middleware.RequireAuth, controllers.PostDojos)
 
 	router.POST("/v1/catalogs/category", middleware.RequireAuth, controllers.PostCategory)
-	router.GET("/v1/catalogs/categories", middleware.RequireAuth, controllers.GetCatgories)
+	router.GET("/v1/catalogs/category", middleware.RequireAuth, controllers.GetCatgories)
 
-	router.GET("/v1/catalogs/permissions", middleware.RequireAuth, controllers.GetPermissions)
-
-	router.POST("/v1/catalogs/court", middleware.RequireAuth, controllers.PostCourts)
-	router.GET("/v1/catalogs/court", middleware.RequireAuth, controllers.GetCourts)
-	router.GET("/v1/catalogs/court/byclub", middleware.RequireAuth, controllers.GetCourtsByClub)
-	router.GET("/v1/catalogs/tournaments", middleware.RequireAuth, controllers.GetTournaments)
-	router.POST("/v1/catalogs/tournaments", middleware.RequireAuth, controllers.PostTournaments)
-
-	router.POST("/v1/tournament/simulateenrollment", middleware.RequireAuth, controllers.PostSimulateEnrollment)
-	router.POST("/v1/tournament/creategroups", middleware.RequireAuth, controllers.PostCreateGroups)
-	router.GET("/v1/tournament/getteams", middleware.RequireAuth, controllers.GetEnrolledTeams)
-	router.GET("/v1/tournament/getteamsbygroup", middleware.RequireAuth, controllers.GetGroups)
-	router.POST("/v1/tournament/createtimeslots", middleware.RequireAuth, controllers.PostCreateTimeSlots)
-
-	router.GET("/v1/tournament/enrolledteams", middleware.RequireAuth, controllers.GetEnrolledTeams)
 	router.POST("/v1/utility/loadusers", middleware.RequireAuth, controllers.PostLoadUsers)
+
+	router.POST("/v1/utility/imageupload", middleware.RequireAuth, controllers.UploadImage)
 
 	return router
 }

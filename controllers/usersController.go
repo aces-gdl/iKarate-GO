@@ -1,23 +1,22 @@
 package controllers
 
 import (
-	"iPadel-GO/initializers"
-	"iPadel-GO/models"
+	"iKarate-GO/initializers"
+	"iKarate-GO/models"
 	"net/http"
-	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
 
 func GetUsers(c *gin.Context) {
-	var page = c.DefaultQuery("page", "1")
-	var limit = c.DefaultQuery("limit", "10")
+	//var page = c.DefaultQuery("page", "1")
+	//var limit = c.DefaultQuery("limit", "10")
 	var categoryID = c.DefaultQuery("CategoryID", "")
 	var PermissionID = c.DefaultQuery("PermissionID", "")
 	var ID = c.DefaultQuery("ID", "")
-	intPage, _ := strconv.Atoi(page)
-	intLimit, _ := strconv.Atoi(limit)
-	offset := (intPage - 1) * intLimit
+	//intPage, _ := strconv.Atoi(page)
+	//intLimit, _ := strconv.Atoi(limit)
+	//offset := (intPage - 1) * intLimit
 
 	var whereClause = " 1 = 1 "
 	if ID != "" {
@@ -30,7 +29,7 @@ func GetUsers(c *gin.Context) {
 		whereClause = whereClause + " AND permission_id = '" + PermissionID + "'"
 	}
 	var users []models.User
-	results := initializers.DB.Where(whereClause).Limit(intLimit).Offset(offset).Find(&users)
+	results := initializers.DB.Where(whereClause).Find(&users)
 	if results.Error != nil {
 		c.JSON(http.StatusBadGateway, gin.H{"status": "error", "message": results.Error})
 		return

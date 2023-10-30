@@ -1,8 +1,8 @@
 package controllers
 
 import (
-	"iPadel-GO/initializers"
-	"iPadel-GO/models"
+	"iKarate-GO/initializers"
+	"iKarate-GO/models"
 	"net/http"
 	"os"
 	"time"

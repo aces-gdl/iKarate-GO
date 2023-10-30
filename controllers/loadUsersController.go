@@ -3,10 +3,9 @@ package controllers
 import (
 	"bufio"
 	"fmt"
-	"iPadel-GO/initializers"
-	"iPadel-GO/models"
+	"iKarate-GO/initializers"
+	"iKarate-GO/models"
 	"net/http"
-	"strconv"
 	"strings"
 
 	"github.com/gin-gonic/gin"
@@ -23,21 +22,10 @@ func PostLoadUsers(c *gin.Context) {
 		return
 	}
 
-	CategoryID, _ := uuid.Parse(c.PostForm("CategoryID"))
-
 	PermissionID, _ := uuid.Parse(c.PostForm("PermissionID"))
 
-	var Category models.Category
-	result := initializers.DB.Where("ID = ?", CategoryID).First(&Category)
-	if result.Error != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"error": "Error buscando Categoria...",
-		})
-		return
-	}
-
 	var Permission models.Permission
-	result = initializers.DB.Where("ID = ?", PermissionID).First(&Permission)
+	result := initializers.DB.Where("ID = ?", PermissionID).First(&Permission)
 	if result.Error != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error": "Error buscando Permisos...",
@@ -60,7 +48,7 @@ func PostLoadUsers(c *gin.Context) {
 
 	// Create password default
 
-	hash, err := bcrypt.GenerateFromPassword([]byte("APJ123"), 10)
+	hash, err := bcrypt.GenerateFromPassword([]byte("Fortin123"), 10)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error": "Fallo al convertir password a hash...",
@@ -75,9 +63,7 @@ func PostLoadUsers(c *gin.Context) {
 		user.GivenName = arrayUser[0]
 		user.FamilyName = arrayUser[1]
 		user.Email = arrayUser[2]
-		user.Ranking, _ = strconv.Atoi(arrayUser[3])
 		user.Name = fmt.Sprintf("%s, %s", user.GivenName, user.FamilyName)
-		user.CategoryID = Category.ID
 		user.PermissionID = Permission.ID
 		user.Password = pwdDefault
 

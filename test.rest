@@ -25,96 +25,50 @@ content-type: application/json
     "GoogleID":"111751505227207835600"
 }
 ###
-POST http://{{host}}/v1/catalogs/tournaments
-content-type: application/json
-
-{
-   "Description" : "Torneo de tercera fuerza varonil",
-	"StartDate"  : "2023-10-02",
-	"EndDate"    : "2023-10-08",
-	"HostClubID" : "fd9b93a1-825a-4bab-b8c0-9a3299594d08",
-	"GameDuration" :  60,
-	"NumberOfCourts" : 4,
-	"Active"     :    true
-}
-
 
 ### Users
 GET http://{{host}}/v1/catalogs/users
-?page=1&limit=50&CategoryID=71055687-9697-4e71-8f12-4902011e048a
+?page=1&limit=50
 content-type: application/json
 ###
-GET http://{{host}}/v1/catalogs/club
 
-###
-
-POST http://{{host}}/v1/catalgs/creategroups
+POST http://{{host}}/v1/catalogs/permissions
 Content-Type: application/json
 
 {
-    "CategoryID": "4234c285-5bab-49bf-a5d7-c34ff27ee256",
-    "TournamentID": "0ee678be-5532-450f-883e-9a577b45652a"
+    "Description": "Responsable"
 }
 ###
-POST http://{{host}}/v1/catalgs/simulateenrollment
+POST http://{{host}}/v1/catalogs/dojos
 Content-Type: application/json
 
 {
-    "CategoryID": "4234c285-5bab-49bf-a5d7-c34ff27ee256",
-    "UserCount": 34,
-    "TournamentID": "0ee678be-5532-450f-883e-9a577b45652a"
+    "Name":        "El Fortin",
+    "Description": "Sei Shin Kan El Fortin",
+    "ShortName":   "El Fortin",
+    "Address":     "Guarda Nacional a un lado de la tienda de Gera",
+    "Phone":       "(33) 3125-5899",
+    "ManagerID":   "a401d49b-2961-4415-841f-5e38bd546f09",
+    "Active":      true
 }
 ###
-GET  http://{{host}}/v1/tournament/getteams?CategoryID=4234c285-5bab-49bf-a5d7-c34ff27ee256&TournamentID=0ee678be-5532-450f-883e-9a577b45652a
+GET  http://{{host}}/v1/catalogs/dojos
 Content-Type: application/json
-
 ###
 
-GET  http://{{host}}/v1/tournament/getteamsbygroup?CategoryID=4234c285-5bab-49bf-a5d7-c34ff27ee256&TournamentID=0ee678be-5532-450f-883e-9a577b45652a
-Content-Type: application/json
-
-###
-POST http://{{host}}/v1/catalogs/club
-content-type: application/json
-
-{
-	"Name":"Altium ",
-	"Description": "Altium Padel Center",
-	"Contact":"Sofi",
-	"Address": "Zona Real",
-	"Phone": "33 3234-3456"
-}
-###
 POST http://{{host}}/v1/catalogs/category
-content-type: application/json
+Content-Type: application/json
 
 {
-    "Description":"Cuarta 4ta Femenil",
-    "Level":"4",
-    "Active":"true"
+    "Description": "Negro",
+    "Color1": "#000000",
+    "Color2": "#000000",
+    "level": "11",
+    "Active": "true"
 }
 ###
-GET http://{{host}}/v1/catalogs/categories?limit=-1
-content-type: application/json
 
-###
-GET http://{{host}}/v1/catalogs/tournaments?limit=-1
-content-type: application/json
-
-###
-
-GET http://{{host}}/v1/catalogs/clubs
+GET http://{{host}}/v1/catalogs/category
 Content-Type: application/json
 
-###
-
-GET http://{{host}}/v1/catalogs/court
-Content-Type: application/json
-###
-POST http://{{host}}/v1/tournament/createtimeslots
-Content-Type: application/json
-###
-
-GET http://{{host}}/v1/tournament/enrolledteams?CategoryID=83caef22-f632-4db4-a9c7-81b29b7cedf2&TournamentID=fa0bbb6d-ad00-4139-8814-164715502591
-Content-Type: application/json
 ###

@@ -1,8 +1,8 @@
 package controllers
 
 import (
-	"iPadel-GO/initializers"
-	"iPadel-GO/models"
+	"iKarate-GO/initializers"
+	"iKarate-GO/models"
 	"net/http"
 	"strconv"
 
@@ -13,6 +13,8 @@ func PostCategory(c *gin.Context) {
 
 	var body struct {
 		Description string
+		Color1      string
+		Color2      string
 		Level       string
 		Active      string
 	}
@@ -28,6 +30,8 @@ func PostCategory(c *gin.Context) {
 	active, _ := strconv.ParseBool(body.Active)
 	category := models.Category{
 		Description: body.Description,
+		Color1:      body.Color1,
+		Color2:      body.Color2,
 		Level:       level,
 		Active:      active,
 	}

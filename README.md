@@ -1,2 +1,2 @@
-# iPadel-GO
+# iKarate-GO
 Backend for iKarate

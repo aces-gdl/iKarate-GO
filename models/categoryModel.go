@@ -13,6 +13,8 @@ type Category struct {
 	UpdatedAt   time.Time
 	DeletedAt   gorm.DeletedAt `gorm:"index"`
 	Description string
+	Color1      string
+	Color2      string
 	Level       int
 	Active      bool
 }

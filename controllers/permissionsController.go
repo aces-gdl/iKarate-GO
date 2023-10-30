@@ -1,8 +1,8 @@
 package controllers
 
 import (
-	"iPadel-GO/initializers"
-	"iPadel-GO/models"
+	"iKarate-GO/initializers"
+	"iKarate-GO/models"
 	"net/http"
 	"strconv"
 
@@ -25,4 +25,33 @@ func GetPermissions(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{"status": "success", "results": len(permissions), "data": permissions})
+}
+
+func PostPermissions(c *gin.Context) {
+	//var body models.Tournament
+
+	var body struct {
+		Description string
+	}
+	resultTest := c.Bind(&body)
+	if resultTest != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "Fallo al leer body...",
+		})
+		return
+	}
+
+	permission := models.Permission{
+		Description: body.Description,
+		Active:      true,
+	}
+	//fmt.Println(tournament)
+	result := initializers.DB.Debug().Create(&permission)
+	if result.Error != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "Fallo al crear torneo... ",
+		})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{})
 }
