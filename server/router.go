@@ -4,15 +4,21 @@ import (
 	"iKarate-GO/controllers"
 	"iKarate-GO/middleware"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
 func NewRouter() *gin.Engine {
 	router := gin.Default()
 	router.ForwardedByClientIP = true
-	router.SetTrustedProxies([]string{"127.0.0.1"})
+	router.SetTrustedProxies([]string{"127.0.0.1", "localhost"})
 	router.Use(gin.Logger())
 	router.Use(gin.Recovery())
+	router.Use(cors.New(cors.Config{
+		AllowOrigins: []string{"*"},
+		AllowMethods: []string{"POST", "PUT", "PATCH", "DELETE"},
+		AllowHeaders: []string{"Content-Type,access-control-allow-origin, access-control-allow-headers"},
+	}))
 
 	router.POST("/v1/security/signup", controllers.Signup)
 	router.POST("/v1/security/login", controllers.Login)
@@ -32,6 +38,7 @@ func NewRouter() *gin.Engine {
 	router.POST("/v1/utility/loadusers", middleware.RequireAuth, controllers.PostLoadUsers)
 
 	router.POST("/v1/utility/imageupload", middleware.RequireAuth, controllers.UploadImage)
+	router.GET("/v1/utility/image", middleware.RequireAuth, controllers.GetImage)
 
 	return router
 }
