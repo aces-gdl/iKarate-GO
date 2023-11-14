@@ -13,7 +13,7 @@ type Schedule struct {
 	UpdatedAt   time.Time
 	DeletedAt   gorm.DeletedAt `gorm:"index"`
 	Description string
-	ClassBegins time.Time
-	ClassEnds   time.Time
+	UserID      uuid.UUID
+	DojoID      uuid.UUID
 	Active      bool
 }

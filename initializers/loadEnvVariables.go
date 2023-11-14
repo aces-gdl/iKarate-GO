@@ -4,8 +4,11 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/google/uuid"
 	"github.com/joho/godotenv"
 )
+
+var CurrentUser uuid.UUID
 
 func LoadEnvVariables() {
 	err := godotenv.Load()

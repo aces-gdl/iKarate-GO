@@ -25,7 +25,15 @@ content-type: application/json
     "GoogleID":"111751505227207835600"
 }
 ###
+POST http://{{host}}/v1/security/login
+content-type: application/json
 
+{
+    "Email":"juan.navarro3@gmail.com",
+    "Password":"jjna100268",
+}
+###
+GET http://{{host}}/v1/security/validate
 ### Users
 GET http://{{host}}/v1/catalogs/users
 ?page=1&limit=50

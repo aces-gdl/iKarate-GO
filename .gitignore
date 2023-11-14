@@ -16,3 +16,4 @@
 .env
 cockroach-data
 
+pictures/*.png

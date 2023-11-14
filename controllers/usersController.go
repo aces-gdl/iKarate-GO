@@ -4,8 +4,10 @@ import (
 	"iKarate-GO/initializers"
 	"iKarate-GO/models"
 	"net/http"
+	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 )
 
 func GetUsers(c *gin.Context) {
@@ -28,14 +30,63 @@ func GetUsers(c *gin.Context) {
 	if PermissionID != "" {
 		whereClause = whereClause + " AND permission_id = '" + PermissionID + "'"
 	}
-	var users []models.User
-	results := initializers.DB.Where(whereClause).Find(&users)
+
+	type userExtended struct {
+		ID                  uuid.UUID
+		CategoryID          uuid.UUID
+		PermissionIDID      uuid.UUID
+		Name                string
+		FamilyName          string
+		GivenName           string
+		Email               string
+		CategoryDescription string
+		Color1              string
+		Color2              string
+		Level               int
+		PermissionID        uuid.UUID
+		StartDate           time.Time
+		Observations        string
+		ContactName         string
+		ContactPhone        string
+		AttendingClassID    uuid.UUID
+		HasPicture          int
+		SeleccionadoID      uuid.UUID
+		Birthday            time.Time
+	}
+	var usersExtended []userExtended
+
+	const queryString = `select 
+							u.id,
+							u.name, 
+							u.family_name , 
+							u.given_name , 
+							u.email,
+							u.category_id, 
+							u.birthday,
+							u.category_id ,
+							c.description as category_description,
+							c.color1,
+							c.color2,
+							c.level,
+							u.permission_id,
+							u.start_date,
+							u.observations,   
+							u.contact_name,
+							u.contact_phone,
+							u.attending_class_id,
+							u.Seleccionado_id,
+							u.birthday
+						from users u
+							inner join categories c on u.category_id = c.id`
+
+	results := initializers.DB.Debug().Raw(queryString).Where(whereClause).Scan(&usersExtended)
+
 	if results.Error != nil {
 		c.JSON(http.StatusBadGateway, gin.H{"status": "error", "message": results.Error})
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"status": "success", "results": len(users), "data": users})
+	c.JSON(http.StatusOK, gin.H{"status": "success", "results": len(usersExtended), "data": usersExtended})
 }
 
 func UpdateUsers(c *gin.Context) {

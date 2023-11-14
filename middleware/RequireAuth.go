@@ -45,7 +45,7 @@ func RequireAuth(c *gin.Context) {
 		}
 
 		c.Set("user", user)
-
+		initializers.CurrentUser = user.ID
 		c.Next()
 	} else {
 		c.AbortWithStatus(http.StatusUnauthorized)

@@ -127,10 +127,7 @@ func Login(c *gin.Context) {
 		return
 	}
 
-	//c.SetSameSite(http.SameSiteLaxMode)
 	c.SetCookie("Authorization", tokenString, 3600*2, "/", "localhost", false, true)
-	//
-	// respond with token
 }
 
 func Validate(c *gin.Context) {
