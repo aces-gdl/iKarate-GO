@@ -47,15 +47,15 @@ func PostCategory(c *gin.Context) {
 }
 
 func GetCatgories(c *gin.Context) {
-	var page = c.DefaultQuery("page", "1")
-	var limit = c.DefaultQuery("limit", "10")
+	//var page = c.DefaultQuery("page", "1")
+	//var limit = c.DefaultQuery("limit", "10")
 
-	intPage, _ := strconv.Atoi(page)
-	intLimit, _ := strconv.Atoi(limit)
-	offset := (intPage - 1) * intLimit
+	//intPage, _ := strconv.Atoi(page)
+	//intLimit, _ := strconv.Atoi(limit)
+	//offset := (intPage - 1) * intLimit
 
 	var categories []models.Category
-	results := initializers.DB.Order("level asc, description asc").Limit(intLimit).Offset(offset).Find(&categories)
+	results := initializers.DB.Order("level asc, description asc").Find(&categories)
 	if results.Error != nil {
 		c.JSON(http.StatusBadGateway, gin.H{"status": "error", "message": results.Error})
 		return

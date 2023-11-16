@@ -127,7 +127,7 @@ func Login(c *gin.Context) {
 		return
 	}
 
-	c.SetCookie("Authorization", tokenString, 3600*2, "/", "localhost", false, true)
+	c.SetCookie("Authorization", tokenString, 3600*2, "/", "", false, true)
 }
 
 func Validate(c *gin.Context) {
