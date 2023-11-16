@@ -80,3 +80,7 @@ GET http://{{host}}/v1/catalogs/category
 Content-Type: application/json
 
 ###
+
+GET  http://{{host}}/v1/catalogs/schedule
+Content-Type: application/json
+###

@@ -35,6 +35,9 @@ func NewRouter() *gin.Engine {
 	router.POST("/v1/catalogs/category", middleware.RequireAuth, controllers.PostCategory)
 	router.GET("/v1/catalogs/category", middleware.RequireAuth, controllers.GetCatgories)
 
+	router.POST("/v1/catalogs/schedule", middleware.RequireAuth, controllers.PostSchedule)
+	router.GET("/v1/catalogs/schedule", middleware.RequireAuth, controllers.GetSchedules)
+
 	router.POST("/v1/utility/loadusers", middleware.RequireAuth, controllers.PostLoadUsers)
 
 	router.POST("/v1/utility/imageupload", middleware.RequireAuth, controllers.UploadImage)
