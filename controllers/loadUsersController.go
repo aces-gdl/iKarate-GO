@@ -42,6 +42,10 @@ func PostLoadUsers(c *gin.Context) {
 	}
 	defer fileToImport.Close()
 
+	var categories []models.Category
+
+	initializers.DB.Find(&categories)
+
 	fileScanner := bufio.NewScanner(fileToImport)
 
 	fileScanner.Split(bufio.ScanLines)
@@ -55,6 +59,7 @@ func PostLoadUsers(c *gin.Context) {
 		})
 		return
 	}
+	catCounter := 0
 
 	var pwdDefault = string(hash)
 	for fileScanner.Scan() {
@@ -66,7 +71,12 @@ func PostLoadUsers(c *gin.Context) {
 		user.Name = fmt.Sprintf("%s, %s", user.GivenName, user.FamilyName)
 		user.PermissionID = Permission.ID
 		user.Password = pwdDefault
-
+		user.CategoryID = categories[catCounter].ID
+		if catCounter > len(categories)-2 {
+			catCounter = 0
+		} else {
+			catCounter = catCounter + 1
+		}
 		initializers.DB.Create(&user)
 	}
 
