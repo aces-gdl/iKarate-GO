@@ -7,5 +7,9 @@ func SyncDatabase() {
 		&models.Permission{},
 		&models.Dojo{},
 		&models.Category{},
-		&models.Schedule{})
+		&models.Schedule{},
+		&models.Payment{},
+		&models.Product{},
+		&models.Ticket{},
+		&models.TicketDetail{})
 }

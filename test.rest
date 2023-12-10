@@ -16,7 +16,7 @@ content-type: application/json
 }
 
 ###
-POST http://{{host}}ç
+POST http://{{host}}/v1/security/login
 content-type: application/json
 
 {
@@ -56,7 +56,7 @@ Content-Type: application/json
     "ShortName":   "El Fortin",
     "Address":     "Guarda Nacional a un lado de la tienda de Gera",
     "Phone":       "(33) 3125-5899",
-    "ManagerID":   "a401d49b-2961-4415-841f-5e38bd546f09",
+    "ManagerID":   "1d7ca957-42b3-4d7a-b7e9-c6a1341bad3f",
     "Active":      true
 }
 ###
@@ -83,4 +83,19 @@ Content-Type: application/json
 
 GET  http://{{host}}/v1/catalogs/schedule
 Content-Type: application/json
+###
+
+GET  http://{{host}}/v1/catalogs/product
+Content-Type: application/json
+###
+
+POST  http://{{host}}/v1/catalogs/product
+Content-Type: application/json
+
+{
+    "Description": "Chamarra 2023 Talla 14",
+    "RegularPrice": "50.00",
+    "Type": "1",
+    "Active": "true"
+}
 ###

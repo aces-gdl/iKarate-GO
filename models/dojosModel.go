@@ -17,7 +17,7 @@ type Dojo struct {
 	ShortName   string
 	Address     string
 	Phone       string
-	email       string
+	Email       string
 	ManagerID   uuid.UUID `gorm:"type:uuid;default:null;"`
 	Manager     User      `gorm:"foreignKey:ManagerID;"`
 	Active      bool

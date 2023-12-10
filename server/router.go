@@ -25,6 +25,8 @@ func NewRouter() *gin.Engine {
 	router.GET("/v1/security/validate", middleware.RequireAuth, controllers.Validate)
 
 	router.GET("/v1/catalogs/users", middleware.RequireAuth, controllers.GetUsers)
+	router.POST("/v1/catalogs/users", middleware.RequireAuth, controllers.PostUser)
+	router.PUT("/v1/catalogs/users", middleware.RequireAuth, controllers.PutUser)
 
 	router.GET("/v1/catalogs/permissions", middleware.RequireAuth, controllers.GetPermissions)
 	router.POST("/v1/catalogs/permissions", middleware.RequireAuth, controllers.PostPermissions)
@@ -37,6 +39,9 @@ func NewRouter() *gin.Engine {
 
 	router.POST("/v1/catalogs/schedule", middleware.RequireAuth, controllers.PostSchedule)
 	router.GET("/v1/catalogs/schedule", middleware.RequireAuth, controllers.GetSchedules)
+
+	router.POST("/v1/catalogs/product", middleware.RequireAuth, controllers.PostProduct)
+	router.GET("/v1/catalogs/product", middleware.RequireAuth, controllers.GetProducts)
 
 	router.POST("/v1/utility/loadusers", middleware.RequireAuth, controllers.PostLoadUsers)
 
